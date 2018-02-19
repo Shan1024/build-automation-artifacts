@@ -16,7 +16,7 @@
 
 # ------------------------------------------------------------------------
 
-FROM ubuntu:trusty
+FROM jpetazzo/dind
 
 RUN \ 
 apt-get -q update && apt-get install -y openssh-server software-properties-common git ant curl unzip xvfb dbus-x11 ttf-ancient-fonts \
@@ -122,7 +122,8 @@ wget -P /build/software/nodejs https://nodejs.org/dist/v8.8.1/node-v8.8.1-linux-
 && rm /build/software/nodejs/node-v8.8.1-linux-x64.tar.xz
 
 RUN \
-sudo apt-get -y install python-pip \
+apt-get update \
+&& sudo apt-get -y install python-pip \
 && sudo pip --version \
 && sudo apt-get -y install build-essential python-dev \
 && sudo pip install mkdocs && mkdocs --version \
@@ -141,7 +142,7 @@ echo "net.ipv4.ip_local_port_range=15000 61000" >> /etc/sysctl.conf \
 RUN \
 mkdir -p /home/jenkins
 
-RUN mkdir -p /build/gpg-keys/.gnupg 
+RUN mkdir -p /build/gpg-keys/.gnupg
 ADD .gnupg /build/gpg-keys/.gnupg
 
 ARG JENKINS_REMOTING_VERSION=3.5
