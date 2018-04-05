@@ -132,8 +132,11 @@ RUN \
 export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" \
 && echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
 && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - \
-&& sudo apt-get update && sudo apt-get install google-cloud-sdk \
-&& gcloud init
+&& sudo apt-get update && sudo apt-get install google-cloud-sdk -y \
+&& gcloud config configurations create ballerina-config \
+&& gcloud config configurations activate ballerina-config \
+&& gcloud auth activate-service-account --key-file="<path_to_file>/file.json" \
+&& gcloud config set project "project-id"
 
 ENV PATH=$PATH:/build/software/nodejs/node-v8.8.1-linux-x64/bin
 
