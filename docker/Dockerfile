@@ -122,6 +122,9 @@ wget -P /build/software/nodejs https://nodejs.org/dist/v8.8.1/node-v8.8.1-linux-
 && rm /build/software/nodejs/node-v8.8.1-linux-x64.tar.xz
 
 RUN \
+export npm_config_prefix=/home/node/.npm-global
+
+RUN \
 apt-get update \
 && sudo apt-get -y install python-pip \
 && sudo pip --version \
